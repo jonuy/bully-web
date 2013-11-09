@@ -3,7 +3,8 @@
  */
 Crafty.c('PlayerController', {
   init: function() {
-    this.requires('2D, Canvas, MapItem, Collision, Color, Fourway, SpriteAnimation, spr_player')
+    this.requires('2D, Canvas, MapItem, Collision, Color, Fourway,' +
+        'SpriteAnimation, spr_player')
       .fourway(2)
       .color('rgb(125, 30, 30)')
       .stopsOnSolids()
@@ -28,6 +29,43 @@ Crafty.c('PlayerController', {
       }
       else {
         this.stop();
+      }
+    });
+
+    this.bind('KeyUp', function(e) {
+      if (e.key == Crafty.keys['SPACE']) {
+        var pcXmin = this._x,
+            pcYmin = this._y,
+            pcXmax = pcXmin + this.w,
+            pcYmax = pcYmin + this.h;
+
+        var action = false;
+        searchResults = Crafty.map.search(this, false);
+        for(i = 0; i < searchResults.length; i++) {
+          var checkObj = searchResults[i];
+          if (checkObj.__c['Actionable']) {
+            var objXmin = checkObj._x,
+                objYmin = checkObj._y,
+                objXmax = objXmin + checkObj.w,
+                objYmax = objYmin + checkObj.h;
+
+            if (((objXmin <= pcXmin && pcXmin <= objXmax) || 
+                    (objXmin <= pcXmax && pcXmax <= objXmax) ||
+                    (pcXmin <= objXmin && objXmin <= pcXmax) ||
+                    (pcXmin <= objXmax && objXmax <= pcXmax)) &&
+                  ((objYmin <= pcYmin && pcYmin <= objYmax) ||
+                    (objYmin <= pcYmax && pcYmax <= objYmax) ||
+                    (pcYmin <= objYmin && objYmin <= pcYmax) ||
+                    (pcYmin <= objYmax && objYmax <= pcYmax))) {
+              action = checkObj.getAction();
+              break;
+            }
+          }
+        }
+
+        if (action == 'open-menu') {
+          alert('open-menu');
+        }
       }
     });
   },

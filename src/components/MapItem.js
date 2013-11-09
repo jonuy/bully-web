@@ -8,17 +8,12 @@ Crafty.c('MapItem', {
   },
 
   at: function(x, y, width, height) {
-    // if (x === undefined && y === undefined) {
-    //   return {x: 2, y: 2}
-    // }
-    // else {
-      this.attr({
-        x: x * BGBoard.tileWidth,
-        y: y * BGBoard.tileHeight,
-        w: width * BGBoard.tileWidth,
-        h: height * BGBoard.tileHeight
-      });
-      return this;
-    // }
+    this.attr({
+      x: x * BGBoard.tileWidth,
+      y: y * BGBoard.tileHeight,
+      w: width * BGBoard.tileWidth,
+      h: height * BGBoard.tileHeight
+    });
+    return this;
   },
 });

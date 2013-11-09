@@ -4,8 +4,8 @@
 function BGBoard() {}
 
 // Number of tiles across and down
-BGBoard.gridWidth = 16;
-BGBoard.gridHeight = 12;
+BGBoard.horizontalTiles = 16;
+BGBoard.verticalTiles = 12;
 
 // Size of tiles in pixels
 BGBoard.tileWidth = 32;
@@ -14,13 +14,13 @@ BGBoard.tileHeight = 32;
 /**
  * @return The pixel width of the board.
  */
-BGBoard.getWidth = function() {
-  return this.gridWidth * this.tileWidth;
+BGBoard.getViewportWidth = function() {
+  return BGBoard.horizontalTiles * BGBoard.tileWidth;
 }
 
 /**
  * @return the pixel height of the board.
  */
- BGBoard.getHeight = function() {
-  return this.gridHeight * this.tileHeight;
+ BGBoard.getViewportHeight = function() {
+  return BGBoard.verticalTiles * BGBoard.tileHeight;
  }
