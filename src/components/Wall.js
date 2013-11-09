@@ -4,3 +4,7 @@ Crafty.c('Wall', {
     this.color(Colors.sortaBlack);
   }
 });
+
+function Wall() {}
+Wall.width = 1;
+Wall.height = 1;

@@ -50,10 +50,10 @@ Crafty.c('PlayerController', {
 /**
  * PlayerController
  */
-function PlayerController() {
-  this.width = 1;
-  this.height = 1;
-}
+function PlayerController() {}
+
+PlayerController.width = 1;
+PlayerController.height = 1;
 
 /**
  * Create and place a PlayerController in the scene.
@@ -64,5 +64,5 @@ function PlayerController() {
  * @return Crafty entity of this PlayerController
  */
 PlayerController.prototype.create = function(x, y) {
-  return Crafty.e('PlayerController').at(x, y, this.width, this.height)
+  return Crafty.e('PlayerController').at(x, y, PlayerController.width, PlayerController.height)
 }
