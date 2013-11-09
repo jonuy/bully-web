@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="lib/crafty.js"></script>
+  <script src="src/BGBoard.js"></script>
+  <script src="src/BGMap.js"></script>
+  <script src="src/Colors.js"></script>
+
+  <script src="src/components/MapItem.js"></script>
+  <script src="src/components/PlayerController.js"></script>
+  <script src="src/components/Wall.js"></script>
+
+  <script src="src/scenes/LoadingScene.js"></script>
+  <script src="src/scenes/TestScene.js"></script>
+
+  <!-- This should probably be last -->
+  <script src="src/Game.js"></script>
+  <script>
+    window.addEventListener('load', Game.start);
+  </script>
+  <style type="text/css" media="screen">
+    body {
+      background: black;
+      text-align: center;
+      color: #DDD;
+      font-family: Arial;
+    }
+ 
+    #cr-stage { margin: 20px auto 0; }
+  </style>
+</head>
+<body>
+  <div id="cr-stage"></div>
+</body>
+</html>
