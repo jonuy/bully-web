@@ -64,7 +64,16 @@ Crafty.c('PlayerController', {
         }
 
         if (action == 'open-menu') {
-          alert('open-menu');
+          // Remove the open menu
+          if (Crafty('Menu').length > 0) {
+            var id = Crafty('Menu')[0];
+            var menu = Crafty(id);
+            menu.destroy();
+          }
+          // Create and display a new Menu
+          else {
+            new Menu().create();
+          }
         }
       }
     });
