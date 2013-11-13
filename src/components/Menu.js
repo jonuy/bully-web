@@ -17,12 +17,23 @@ Crafty.c('Menu', {
   },
 });
 
+/**
+ * Menu object constructor
+ */
 function Menu() {
   this.width = 200;
   this.height = 150;
+  this.entity = undefined;
+  this.items = [];
+  this.title = '';
+
+  return this;
 }
 
-Menu.prototype.create = function() {
+/**
+ * Menu.create()
+ */
+Menu.prototype.create = function(items) {
   var bottomRightX = BGBoard.getViewportWidth();
   var bottomRightY = BGBoard.getViewportHeight();
   var borderWidth = 10;
@@ -30,9 +41,26 @@ Menu.prototype.create = function() {
   var menuTopLeftX = bottomRightX - this.width - borderWidth * 2;
   var menuTopLeftY = bottomRightY - this.height - borderWidth * 2;
 
-  Crafty.e('Menu')
+  this.entity = Crafty.e('Menu')
     .attr({x: menuTopLeftX, y: menuTopLeftY, w: this.width, h: this.height})
     .text('Menu Test');
+
+  var menuItemsY = menuTopLeftY + 10 /*border size*/ + 30 /* Menu title size*/;
+  for (i = 0; i < items.length; i++) {
+    this.items[i] = Crafty.e('MenuItem')
+      .attr({x: menuTopLeftX, y: menuItemsY + i * 30, w: this.width, h: this.height})
+      .text(items[i]);
+  }
+}
+
+/**
+ * Menu.destroy()
+ */
+Menu.prototype.destroy = function() {
+  this.entity.destroy();
+  for (i = 0; i < this.items.length; i++) {
+    this.items[i].destroy();
+  }
 }
 
 /**

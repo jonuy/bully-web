@@ -2,6 +2,8 @@
  * PlayerController Crafty component
  */
 Crafty.c('PlayerController', {
+  mMenu: undefined,
+
   init: function() {
     this.requires('2D, Canvas, MapItem, Collision, Color, Fourway,' +
         'SpriteAnimation, spr_player')
@@ -68,16 +70,19 @@ Crafty.c('PlayerController', {
         // Handle the action detected, if any
         if (action == 'open-menu') {
           // Remove the open menu
-          if (Crafty('Menu').length > 0) {
-            var id = Crafty('Menu')[0];
-            var menu = Crafty(id);
-            menu.destroy();
+          if (this.mMenu != undefined) {
+            this.mMenu.destroy();
+            this.mMenu = undefined;
 
+            // Re-enable PC movement
             this.enableControl();
           }
           // Create and display a new Menu
           else {
-            new Menu().create();
+            this.mMenu = new Menu();
+            this.mMenu.create(['Option A', 'Option B', 'Option C']);
+
+            // Prevent PC from moving
             this.disableControl();
           }
         }
