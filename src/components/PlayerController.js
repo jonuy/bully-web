@@ -14,17 +14,17 @@ Crafty.c('PlayerController', {
       .animate('PlayerMovingLeft', 0, 3, 2);
 
     var animation_speed = 10;
-    this.bind('NewDirection', function(data) {
-      if (data.x > 0) {
+    this.bind('NewDirection', function(movement) {
+      if (movement.x > 0) {
         this.animate('PlayerMovingRight', animation_speed, -1);
       }
-      else if (data.x < 0) {
+      else if (movement.x < 0) {
         this.animate('PlayerMovingLeft', animation_speed, -1);
       }
-      else if (data.y < 0) {
+      else if (movement.y < 0) {
         this.animate('PlayerMovingUp', animation_speed, -1);
       }
-      else if (data.y > 0) {
+      else if (movement.y > 0) {
         this.animate('PlayerMovingDown', animation_speed, -1);
       }
       else {
@@ -32,6 +32,7 @@ Crafty.c('PlayerController', {
       }
     });
 
+    // Handle the rest of the key
     this.bind('KeyUp', function(e) {
       if (e.key == Crafty.keys['SPACE']) {
         var pcXmin = this._x,
@@ -39,6 +40,7 @@ Crafty.c('PlayerController', {
             pcXmax = pcXmin + this.w,
             pcYmax = pcYmin + this.h;
 
+        // Check if the PC is touching some Actionable entity
         var action = false;
         searchResults = Crafty.map.search(this, false);
         for(i = 0; i < searchResults.length; i++) {
@@ -63,32 +65,32 @@ Crafty.c('PlayerController', {
           }
         }
 
+        // Handle the action detected, if any
         if (action == 'open-menu') {
           // Remove the open menu
           if (Crafty('Menu').length > 0) {
             var id = Crafty('Menu')[0];
             var menu = Crafty(id);
             menu.destroy();
+
+            this.enableControl();
           }
           // Create and display a new Menu
           else {
             new Menu().create();
+            this.disableControl();
           }
         }
       }
     });
   },
 
-  stopMovement: function() {
-    this._speed = 0;
-    if (this._movement) {
-      this.x -= this._movement.x;
-      this.y -= this._movement.y;
-    }
-  },
-
   stopsOnSolids: function() {
-    this.onHit('Solid', this.stopMovement);
+    this.bind('Moved', function(from) {
+       if(this.hit('Solid')){
+           this.attr({x: from.x, y: from.y});
+        }
+    });
 
     return this;
   },
