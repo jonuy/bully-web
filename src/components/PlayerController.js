@@ -71,16 +71,22 @@ Crafty.c('PlayerController', {
         if (action == 'open-menu') {
           // Remove the open menu
           if (this.mMenu != undefined) {
+            this.mMenu.makeSelection();
             this.mMenu.destroy();
             this.mMenu = undefined;
 
             // Re-enable PC movement
             this.enableControl();
+
+            // Unbind the menu control callback
+            this.unbind('KeyUp', this.menuControlCallback);
           }
           // Create and display a new Menu
           else {
             this.mMenu = new Menu();
             this.mMenu.create(['Option A', 'Option B', 'Option C']);
+
+            this.bind('KeyUp', this.menuControlCallback);
 
             // Prevent PC from moving
             this.disableControl();
@@ -88,6 +94,17 @@ Crafty.c('PlayerController', {
         }
       }
     });
+  },
+
+  menuControlCallback: function (e) {
+    // Up arrow
+    if (e.keyCode == 38) {
+      this.mMenu.moveSelectorUp();
+    }
+    // Down arrow
+    else if (e.keyCode == 40) {
+      this.mMenu.moveSelectorDown();
+    }
   },
 
   stopsOnSolids: function() {

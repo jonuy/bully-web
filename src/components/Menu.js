@@ -23,9 +23,20 @@ Crafty.c('Menu', {
 function Menu() {
   this.width = 200;
   this.height = 150;
+
+  // Item index of the current menu selection
+  this.currentSelection = 0;
+
+  // Menu entity
   this.entity = undefined;
+
+  // Array of MenuItems
   this.items = [];
+
+  // MenuSelector entity
   this.selector = undefined;
+
+  // Menu title text
   this.title = '';
 
   return this;
@@ -57,6 +68,7 @@ Menu.prototype.create = function(items) {
   }
 
   // Create Menu selector
+  this.currentSelection = 0;
   var selectorX = menuItemsX - 20 /*selector size + padding*/;
   var selectorY = menuItemsY + 5 /*for something, I don't know*/;
   this.selector = Crafty.e('MenuSelector')
@@ -77,6 +89,39 @@ Menu.prototype.destroy = function() {
 
   // Remove menu selector
   this.selector.destroy();
+}
+
+/**
+ * Menu.makeSelection()
+ */
+Menu.prototype.makeSelection = function() {
+  console.log("selected: " + this.currentSelection);
+}
+
+/**
+ * Menu.moveSelectorDown()
+ * Move the menu selector down item up.
+ */
+Menu.prototype.moveSelectorDown = function() {
+  var oldIndex = this.currentSelection;
+  var newIndex = oldIndex + 1 < this.items.length ? oldIndex + 1 : 0;
+  var delta = newIndex - oldIndex;
+
+  this.selector.y += (30 * delta);
+  this.currentSelection = newIndex;
+}
+
+/**
+ * Menu.moveSelectorUp()
+ * Move the menu selector one item up.
+ */
+Menu.prototype.moveSelectorUp = function() {
+  var oldIndex = this.currentSelection;
+  var newIndex = oldIndex - 1 >= 0 ? oldIndex - 1 : this.items.length - 1;
+  var delta = newIndex - oldIndex;
+
+  this.selector.y += (30 * delta);
+  this.currentSelection = newIndex;
 }
 
 /**
