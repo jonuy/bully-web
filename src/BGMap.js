@@ -24,6 +24,10 @@ BGMap.prototype.create = function() {
       else if (val == 1) {
         new MIWall().create(x, y);
       }
+      // Dialogue test
+      else if (val == 'd') {
+        new MIDialogueTest().create(x, y);
+      }
       // Water Fountain
       else if (val == 'w') {
         new MIWaterFountain().create(x, y);
@@ -60,7 +64,7 @@ TestMap.prototype.map = function() {
   return [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 'w', 0, 'x', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 'w', 0, 'x', 0, 'd', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],

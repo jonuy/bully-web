@@ -43,7 +43,7 @@ function Menu() {
 }
 
 /**
- * Menu.create()
+ * Menu.create(items)
  */
 Menu.prototype.create = function(items) {
   var bottomRightX = BGBoard.getViewportWidth();

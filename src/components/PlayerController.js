@@ -2,6 +2,7 @@
  * PlayerController Crafty component
  */
 Crafty.c('PlayerController', {
+  mDialogue: undefined,
   mMenu: undefined,
 
   init: function() {
@@ -90,6 +91,29 @@ Crafty.c('PlayerController', {
 
             // Prevent PC from moving
             this.disableControl();
+          }
+        }
+        else if (action == 'open-dialogue') {
+          if (this.mDialogue == undefined) {
+            var testConversation = [
+              'Lorem ipsum dolor sit amet...',
+              'Cupcake ipsum dolor eat cake it.'
+            ];
+            this.mDialogue = new Dialogue();
+            this.mDialogue.create(testConversation);
+
+            this.disableControl();
+          }
+          else {
+            if (this.mDialogue.hasNext()) {
+              this.mDialogue.displayNext();
+            }
+            else {
+              this.mDialogue.destroy();
+              this.mDialogue = undefined;
+
+              this.enableControl();
+            }
           }
         }
       }
