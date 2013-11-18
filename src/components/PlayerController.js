@@ -96,8 +96,9 @@ Crafty.c('PlayerController', {
         else if (action == 'open-dialogue') {
           if (this.mDialogue == undefined) {
             var testConversation = [
-              'Lorem ipsum dolor sit amet...',
-              'Cupcake ipsum dolor eat cake it.'
+              '<span style="color:red">Player: </span>Lorem ipsum dolor sit amet...',
+              'Pudding jelly macaroon. Dessert bear claw danish oat cake sweet. Applicake gummies cheesecake biscuit sugar plum.',
+              'Candy icing cotton candy cake jelly jujubes icing. Toffee ice cream halvah bear claw fruitcake gummi bears.'
             ];
             this.mDialogue = new Dialogue();
             this.mDialogue.create(testConversation);

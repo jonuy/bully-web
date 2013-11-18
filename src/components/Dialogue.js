@@ -8,6 +8,7 @@ Crafty.c('Dialogue', {
         'background-color': 'white',
         'border': '10px solid black',
         'border-radius': '10px',
+        'padding': '5px',
         'text-align': 'left',
       })
       .textColor('#000000')
@@ -34,6 +35,9 @@ function Dialogue() {
   // Array of strings to display
   this.messages = [];
 
+  // Next arrow entity
+  this.nextArrow = undefined;
+
   return this;
 }
 
@@ -45,8 +49,23 @@ Dialogue.prototype.create = function(messages) {
   this.messages = messages;
 
   this.entity = Crafty.e('Dialogue')
-    .attr({x:0, y: 0, w: this.width, h: this.height})
+    .attr({
+      x: 0,
+      y: 0,
+      w: this.width - 10 * 2 /*border width*/ - 5 * 2 /*padding*/,
+      h: this.height
+    })
     .text(this.messages[0]);
+
+  if (this.messages.length > 1) {
+    this.nextArrow = Crafty.e('DialogueNextArrow')
+      .attr({
+        x: this.width - 10 * 4,
+        y: this.height,
+        w: 0,
+        h: 0
+      });
+  }
 }
 
 /**
@@ -63,6 +82,11 @@ Dialogue.prototype.destroy = function() {
 Dialogue.prototype.displayNext = function() {
   this.currentMessage++;
   this.entity.text(this.messages[this.currentMessage]);
+
+  if (this.currentMessage == this.messages.length - 1) {
+    this.nextArrow.destroy();
+    this.nextArrow = undefined;
+  }
 }
 
 /**
@@ -71,6 +95,21 @@ Dialogue.prototype.displayNext = function() {
 Dialogue.prototype.hasNext = function() {
   return this.currentMessage + 1 < this.messages.length;
 }
+
+/**
+ * Dialogue next arrow Component
+ */
+Crafty.c('DialogueNextArrow', {
+  init: function() {
+    this.requires('2D, DOM')
+      .css({
+        'border-style': 'solid',
+        'border-width': '10px 10px 0 10px',
+        'border-color': '#000 transparent transparent transparent',
+        'text-align': 'left',
+      });
+  }
+});
 
 /**
  * Dialogue Test Component
