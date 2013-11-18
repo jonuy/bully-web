@@ -41,6 +41,9 @@ BGMap.prototype.create = function() {
   var player = new PlayerController();
   var craftyPlayer = player.create(pcX, pcY);
   Crafty.viewport.follow(craftyPlayer, 0, 0);
+
+  // Fade-in screen, needs to be the last entity drawn to the screen
+  var fadeInScreen = Crafty.e('FadeInScreen');
 }
 
 /**
@@ -49,6 +52,28 @@ BGMap.prototype.create = function() {
 BGMap.prototype.map = function() {
   return {};
 }
+
+/**
+ *
+ */
+Crafty.c('FadeInScreen', {
+  init: function() {
+    this.requires('2D, Canvas, Color, Tween')
+      .attr({
+        alpha: 1.0,
+        x: 0,
+        y: 0,
+        w: BGBoard.getViewportWidth(),
+        h: BGBoard.getViewportHeight()
+      })
+      .color(Colors.black)
+      .tween({alpha:0.0}, 100);
+
+    this.bind('TweenEnd', function(e) {
+      console.log('End of the screen fade in');
+    });
+  },
+});
 
 /**
  * TestMap
@@ -83,4 +108,11 @@ TestMap.prototype.map = function() {
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
   ];
+}
+
+/**
+ * School Drop Off map
+ */
+function SchoolDropOffMap() {
+
 }
