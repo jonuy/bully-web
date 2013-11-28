@@ -10,7 +10,7 @@ Crafty.c('PlayerController', {
         'SpriteAnimation, spr_player')
       .fourway(2)
       .color('rgb(125, 30, 30)')
-      .stopsOnSolids()
+      .movementOverride()
       .animate('PlayerMovingUp', 0, 0, 2)
       .animate('PlayerMovingRight', 0, 1, 2)
       .animate('PlayerMovingDown', 0, 2, 2)
@@ -132,11 +132,19 @@ Crafty.c('PlayerController', {
     }
   },
 
-  stopsOnSolids: function() {
+  movementOverride: function() {
     this.bind('Moved', function(from) {
-       if(this.hit('Solid')){
-           this.attr({x: from.x, y: from.y});
-        }
+      // Stop player movement when hitting a Solid
+      hitSolid = this.hit('Solid');
+
+      // Stop player movement if they've reached the bounds of the level
+      hitMapEdge = this._x < 0 || this._y < 0 ||
+        this._x + BGBoard.tileWidth > currentMap.width * BGBoard.tileWidth ||
+        this._y + BGBoard.tileHeight > currentMap.height * BGBoard.tileHeight;
+
+      if (hitSolid || hitMapEdge) {
+         this.attr({x: from.x, y: from.y});
+      }
     });
 
     return this;

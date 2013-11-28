@@ -1,6 +1,8 @@
 /**
  *
  */
+var currentMap = currentMap || {};
+
 function BGMap() {
   this.width = 0;
   this.height = 0;
@@ -44,6 +46,8 @@ BGMap.prototype.create = function() {
 
   // Fade-in screen, needs to be the last entity drawn to the screen
   var fadeInScreen = Crafty.e('FadeInScreen');
+
+  currentMap = this;
 }
 
 /**
@@ -54,7 +58,8 @@ BGMap.prototype.map = function() {
 }
 
 /**
- *
+ * FadeInScreen Component
+ *   Component to draw a black fade in over the entire viewport when a new map loads.
  */
 Crafty.c('FadeInScreen', {
   init: function() {
@@ -114,5 +119,25 @@ TestMap.prototype.map = function() {
  * School Drop Off map
  */
 function SchoolDropOffMap() {
+  this.width = 16;
+  this.height = 12;
+}
+SchoolDropOffMap.prototype = new BGMap();
+SchoolDropOffMap.prototype.constructor = SchoolDropOffMap;
 
+SchoolDropOffMap.prototype.map = function() {
+  return [
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 1, 1, 1, 1, 1, 0, 0, 'x', 0, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1]
+  ];
 }
