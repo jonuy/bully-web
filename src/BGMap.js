@@ -34,6 +34,9 @@ BGMap.prototype.create = function() {
       else if (val == 'w') {
         new MIWaterFountain().create(x, y);
       }
+      else if (val == 'TestScene') {
+        new SceneTransitionArea('TestScene').create(x, y);
+      }
     }
   }
 
@@ -56,6 +59,36 @@ BGMap.prototype.create = function() {
 BGMap.prototype.map = function() {
   return {};
 }
+
+/**
+ * SceneTransitionArea
+ */
+function SceneTransitionArea(nextScene) {
+  this.nextScene = nextScene;
+
+  this.width = 1;
+  this.height = 1;
+}
+
+SceneTransitionArea.prototype.create = function(x, y) {
+  return Crafty.e('SceneTransitionArea')
+    .at(x, y, this.width, this.height)
+    .setNextScene(this.nextScene);
+}
+
+Crafty.c('SceneTransitionArea', {
+  init: function() {
+    this.requires('2D, Canvas, MapItem');
+  },
+
+  setNextScene: function(nextScene) {
+    this.nextScene = nextScene;
+  },
+
+  getNextScene: function() {
+    return this.nextScene;
+  },
+});
 
 /**
  * FadeInScreen Component
@@ -138,6 +171,6 @@ SchoolDropOffMap.prototype.map = function() {
     [1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
     [1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
     [1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1]
+    [1, 1, 1, 1, 1, 1, 1, 'TestScene', 'TestScene', 1, 1, 1, 1, 1, 1, 1]
   ];
 }

@@ -134,6 +134,7 @@ Crafty.c('PlayerController', {
 
   movementOverride: function() {
     this.bind('Moved', function(from) {
+
       // Stop player movement when hitting a Solid
       hitSolid = this.hit('Solid');
 
@@ -145,6 +146,18 @@ Crafty.c('PlayerController', {
       if (hitSolid || hitMapEdge) {
          this.attr({x: from.x, y: from.y});
       }
+
+      // Check for entry into any areas that would trigger a scene transition
+      stas = Crafty('SceneTransitionArea');
+      for (i = 0; i < stas.length; i++) {
+        checkSta = Crafty(stas[i]);
+        if ((this._x == checkSta._x && this._y >= checkSta._y && this._y < checkSta._y + checkSta.h)
+        || (this._y == checkSta._y && this._x >= checkSta._x && this._x < checkSta._x + checkSta.w)) {
+          Crafty.scene(checkSta.getNextScene());
+          break;
+        }
+      }
+
     });
 
     return this;
