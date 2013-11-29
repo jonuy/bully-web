@@ -45,7 +45,10 @@ BGMap.prototype.create = function() {
   // placed in the map yet.
   var player = new PlayerController();
   var craftyPlayer = player.create(pcX, pcY);
+  // Disable player movement until fade in completes
+  craftyPlayer.fourway(0);
   Crafty.viewport.follow(craftyPlayer, 0, 0);
+
 
   // Fade-in screen, needs to be the last entity drawn to the screen
   var fadeInScreen = Crafty.e('FadeInScreen');
@@ -108,7 +111,9 @@ Crafty.c('FadeInScreen', {
       .tween({alpha:0.0}, 100);
 
     this.bind('TweenEnd', function(e) {
-      console.log('End of the screen fade in');
+      console.log('TweenEnd: End of the screen fade in');
+      // Enable PlayerController movement
+      Crafty(Crafty('PlayerController')[0]).fourway(2);
     });
   },
 });
@@ -118,13 +123,17 @@ Crafty.c('FadeInScreen', {
  */
 function TestMap() {
   this.width = 20;
-  this.height = 20;
+  this.height = 24;
 }
 TestMap.prototype = new BGMap();
 TestMap.prototype.constructor = TestMap;
 
 TestMap.prototype.map = function() {
   return [
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 'w', 0, 'x', 0, 'd', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
